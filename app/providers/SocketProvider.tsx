@@ -17,7 +17,7 @@ const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const newSocket = io("http://86.200.114.130:3000", { withCredentials: true });
+        const newSocket = io(`http://${process.env.NEXT_PUBLIC_API_URL_SERVER_IP}:${process.env.NEXT_PUBLIC_API_URL_SERVER_PORT}`, { withCredentials: true });
 
         newSocket.on("connect", () => {
             console.log("🔌 Connecté au serveur WebSocket");
