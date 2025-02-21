@@ -27,10 +27,7 @@ export default function LoginPage() {
 
         // Sauvegarde le token dans les cookies
         document.cookie = `token=${data.token}; path=/; SameSite=Strict`;
-        document.cookie = `userId=${data.userId}; path=/; SameSite=Strict`;
-
-        console.log(data.token);
-        
+        document.cookie = `userId=${data.userId}; path=/; SameSite=Strict`;        
 
         setMessage("Connexion réussie !");
         router.push("/chat");

@@ -105,7 +105,8 @@ const Conversation: React.FC<ConversationProps> = ({
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            handleSendMessage(newMessage);
+                            setNewMessage('');
+                            handleSendMessage(newMessage.trim());
                         }
                     }}
                     placeholder="Écrire un message..."
@@ -113,7 +114,12 @@ const Conversation: React.FC<ConversationProps> = ({
                 />
                 <div className="flex items-center space-x-4 mt-4">
                     <button
-                        onClick={() => handleSendMessage(newMessage)}
+                        onClick={() => {
+                            if (newMessage.trim() !== '') {
+                                handleSendMessage(newMessage.trim());
+                                setNewMessage('');
+                            }
+                        }}
                         className="bg-blue-500 text-white p-3 rounded-xl flex items-center justify-center"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">

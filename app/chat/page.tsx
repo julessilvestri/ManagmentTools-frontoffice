@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ContactList from "./components/ContactList";
 import Conversation from "./components/Conversation";
+import UserConnected from "./components/UserConnected";
 import SearchSection from "./components/SearchSection";
 import { fetchConversation, sendMessage } from "./services/messageService";
 import { fetchContacts } from "./services/contactService";
@@ -126,12 +127,12 @@ const ChatPage = () => {
             socket.emit("sendMessage", messageData, (response: any) => {
                 if (response?.success) {
                     setConversation((prev) => [...prev, response.message]);
-                    setRefreshContacts((prev) => !prev);
                 } else {
                     console.error("Erreur WebSocket:", response?.error || "Message non envoyé");
                     setError("Le message n'a pas pu être envoyé.");
                 }
             });
+            setRefreshContacts((prev) => !prev);
         }
 
         sendMessage(messageData, token)
@@ -187,19 +188,23 @@ const ChatPage = () => {
                 <div className="mt-6">
                     <ContactList contacts={contacts} userId={userId} selectedContact={selectedContact} onSelectContact={handleSelectContact} />
                 </div>
+
+                <div className="absolute bottom-0 left-0 w-[23%]">
+                    <UserConnected userId={userId} token={token} />
+                </div>
             </div>
 
-                {selectedContact && (
-                    <Conversation
-                        conversation={conversation}
-                        receiver={selectedContact}
-                        userId={userId}
-                        handleSendMessage={handleSendMessage}
-                        newMessage={newMessage}
-                        setNewMessage={setNewMessage}
-                        conversationEndRef={conversationEndRef}
-                    />
-                )}
+            {selectedContact && (
+                <Conversation
+                    conversation={conversation}
+                    receiver={selectedContact}
+                    userId={userId}
+                    handleSendMessage={handleSendMessage}
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}
+                    conversationEndRef={conversationEndRef}
+                />
+            )}
 
             <button
                 onClick={() => router.push("/tasks")}

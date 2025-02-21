@@ -22,7 +22,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({ startConversation, token 
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/users/search?query=${searchQuery}`, {
+            const response = await fetch(`http://${process.env.NEXT_PUBLIC_API_URL_SERVER_IP}:5000/api/v1/users/search?query=${searchQuery}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
