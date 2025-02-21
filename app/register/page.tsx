@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
@@ -11,6 +11,13 @@ export default function RegisterPage() {
   });
   const [message, setMessage] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+      const tokenFromCookie = document.cookie.match(/token=([^;]+)/)?.[1];
+      if (tokenFromCookie) {
+        router.push("/chat"); // Rediriger vers /chat si un token est présent
+      }
+    }, [router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,7 +57,7 @@ export default function RegisterPage() {
 
         <h1 className="text-3xl font-bold text-white mb-6">Inscription</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-          
+
           {/* Lastname Input */}
           <div className="relative">
             <input
