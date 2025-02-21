@@ -173,7 +173,21 @@ const ChatPage = () => {
         );
     }
 
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
+    if (error) return <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center p-6">
+        <img
+            src="https://media.giphy.com/media/pgOEYWP6BKT4yh1NdY/giphy.gif?cid=ecf05e47g9bt19hudd9r568y5wxz9z1crewhcwy6iluziode&ep=v1_stickers_search&rid=giphy.gif&ct=s"
+            alt="Erreur"
+            className="w-64 h-64 mb-6"
+        />
+        <h1 className="text-3xl font-bold text-red-600">Oups ! Une erreur est survenue</h1>
+        {error && <p className="text-lg text-gray-700 mt-2">{error}</p>}
+        <button
+            className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            onClick={() => router.push("/login")}
+        >
+            Retour à la connexion
+        </button>
+    </div>;
 
     return (
         <div className="flex h-screen bg-gray-100">
