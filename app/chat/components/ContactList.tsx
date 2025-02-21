@@ -27,7 +27,7 @@ interface ContactListProps {
 const ContactList: React.FC<ContactListProps> = ({ contacts, userId, selectedContact, onSelectContact }) => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Conversations</h2>
+      <h1 className="text-xl font-semibold mb-4 text-gray-800">Conversations</h1>
       {contacts.map((contact) => {
         const isSender = contact.sender._id === userId;
         const otherUser = isSender ? contact.receiver : contact.sender;

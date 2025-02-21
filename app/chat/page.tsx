@@ -177,22 +177,42 @@ const ChatPage = () => {
 
     return (
         <div className="flex h-screen bg-gray-100">
+
             <div className="w-[23%] bg-white shadow-lg p-6 rounded-r-lg">
+                <div className="flex items-center space-x-3">
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/512/9909/9909360.png"
+                        alt="Logo"
+                        className="w-10 h-10 object-cover"
+                    />
+                    <h1 className="text-3xl font-bold text-gray-800">Zynko</h1>
+                </div>
+
+                <hr className="my-4 border-gray-300" />
+
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold text-gray-800">Messagerie</h1>
-                    <p className="text-sm text-gray-500 mt-2">Commencez une nouvelle conversation ou consultez vos contacts</p>
+                    <h1 className="text-2xl font-bold text-gray-800">Messagerie</h1>
+                    <p className="text-sm text-gray-500 mt-2">
+                        Commencez une nouvelle conversation ou consultez vos contacts
+                    </p>
                 </div>
 
                 <SearchSection startConversation={startConversation} token={token} />
 
                 <div className="mt-6">
-                    <ContactList contacts={contacts} userId={userId} selectedContact={selectedContact} onSelectContact={handleSelectContact} />
+                    <ContactList
+                        contacts={contacts}
+                        userId={userId}
+                        selectedContact={selectedContact}
+                        onSelectContact={handleSelectContact}
+                    />
                 </div>
 
                 <div className="absolute bottom-0 left-0 w-[23%]">
                     <UserConnected userId={userId} token={token} />
                 </div>
             </div>
+
 
             {selectedContact && (
                 <Conversation
