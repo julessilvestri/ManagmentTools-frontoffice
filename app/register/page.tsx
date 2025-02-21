@@ -148,6 +148,13 @@ export default function HomePage() {
 
                 {/* Message Display */}
                 {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
+
+                <a
+                  href="/login"
+                  className="mt-4 block text-blue-500 hover:text-blue-700 underline"
+                >
+                  J'ai déjà un compte
+                </a>
               </div>
             </div>
           </div>

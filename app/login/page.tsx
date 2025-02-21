@@ -27,7 +27,7 @@ export default function LoginPage() {
 
         // Sauvegarde le token dans les cookies
         document.cookie = `token=${data.token}; path=/; SameSite=Strict`;
-        document.cookie = `userId=${data.userId}; path=/; SameSite=Strict`;        
+        document.cookie = `userId=${data.userId}; path=/; SameSite=Strict`;
 
         setMessage("Connexion réussie !");
         router.push("/chat");
@@ -37,7 +37,7 @@ export default function LoginPage() {
     } catch (error) {
       setMessage("Erreur lors de la connexion.");
     }
-  };  
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -104,6 +104,13 @@ export default function LoginPage() {
 
                 {/* Message Display */}
                 {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
+
+                <a
+                  href="/register"
+                  className="mt-4 block text-blue-500 hover:text-blue-700 underline"
+                >
+                  Je n'ai pas de compte
+                </a>
               </div>
             </div>
           </div>
