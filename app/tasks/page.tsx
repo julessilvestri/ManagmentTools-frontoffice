@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSocket } from "../providers/SocketProvider";
 import UserConnected from "./components/UserConnected";
 import WorkspaceList from "./components/WorkspaceList";
+import KanbanBoard from "./components/KanbanBoard";
 import { fetchWorkspaces, createWorkspaces } from "./services/workspaceService";
 import CreateWorkspaceForm from "./components/CreateWorkspaceForm";
 
@@ -18,7 +19,8 @@ const TasksPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [kanbanColumns, setKanbanColumns] = useState({
-    todo: [],
+    Backlog: [],
+    ToDo: [],
     inProgress: [],
     done: []
   });
@@ -66,22 +68,6 @@ const TasksPage = () => {
     } catch (error) {
       setError("Erreur lors de la création de l'espace de travail.");
       console.error(error);
-    }
-  };
-
-  const handleDrag = (taskId: string, column: string) => {
-    const updatedColumns = { ...kanbanColumns };
-    const task = Object.values(updatedColumns).flat().find((t) => t.id === taskId);
-
-    if (task) {
-      // Retirer la tâche de sa colonne actuelle
-      for (const key in updatedColumns) {
-        updatedColumns[key] = updatedColumns[key].filter((t: any) => t.id !== taskId);
-      }
-
-      // Ajouter la tâche à la nouvelle colonne
-      updatedColumns[column].push(task);
-      setKanbanColumns(updatedColumns);
     }
   };
 
@@ -140,40 +126,8 @@ const TasksPage = () => {
         </div>
       </div>
 
-      <div className="flex-1 bg-gray-100 p-6 flex flex-col w-[77%]">
-        {/* Kanban */}
-        <div className="flex space-x-4">
-          {Object.keys(kanbanColumns).map((column) => (
-            <div
-              key={column}
-              className="bg-white p-4 rounded-lg shadow-lg flex-1"
-            >
-              <h2 className="text-xl font-semibold mb-4 capitalize">{column}</h2>
-              <div
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => {
-                  const taskId = e.dataTransfer.getData("taskId");
-                  handleDrag(taskId, column);
-                }}
-                className="space-y-4"
-              >
-                {kanbanColumns[column].map((task: any) => (
-                  <div
-                    key={task.id}
-                    draggable
-                    onDragStart={(e) => e.dataTransfer.setData("taskId", task.id)}
-                    className="bg-gray-100 p-3 rounded-md shadow-sm cursor-pointer"
-                  >
-                    <p className="font-semibold">{task.title}</p>
-                    <p className="text-sm text-gray-500">{task.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
+      <KanbanBoard/>
+      
       {/* Modal de création de workspace */}
       {isModalOpen && (
         <CreateWorkspaceForm
