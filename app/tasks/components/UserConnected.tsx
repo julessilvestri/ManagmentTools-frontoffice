@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-
 interface User {
     _id: string;
     lastname: string;
@@ -60,7 +59,6 @@ const UserConnected: React.FC<UserConnectedProps> = ({ userId, token }) => {
             <div className="flex items-center space-x-3">
                 <img
                     src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3ZvdjJnbmZsdjFxemxmNmdvNnRxdms3OW91ZHF5NWNhNTg4YmlweiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wMlcT3exSxYAcbkby6/giphy.gif"
-
                     alt="Avatar utilisateur"
                     className="w-10 h-10 rounded-full object-cover"
                 />
