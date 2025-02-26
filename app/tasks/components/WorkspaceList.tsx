@@ -1,4 +1,3 @@
-// components/WorkspaceList.tsx
 import React from "react";
 
 interface User {
@@ -15,31 +14,35 @@ interface Workspace {
   description: string;
   owner: User;
   members: User[];
-  tasks: string[];
+  tasks: { id: string; title: string; description: string; status: string; priority: string; assignedTo: string; dueDate: string }[];
   createdAt: string;
 }
 
 interface WorkspaceListProps {
   workspaces: Workspace[];
-  selectedWorkspace: Workspace;
+  selectedWorkspace: Workspace | null;
+  setSelectedWorkspace: React.Dispatch<React.SetStateAction<Workspace | null>>;
+  token: string;
 }
 
-const WorkspaceList: React.FC<WorkspaceListProps> = ({ workspaces, selectedWorkspace }) => {
+const WorkspaceList: React.FC<WorkspaceListProps> = ({ workspaces, selectedWorkspace, setSelectedWorkspace, token }) => {
+
+  const handleWorkspaceClick = (workspace: Workspace) => {
+    setSelectedWorkspace(workspace);
+  };
+
   return (
     <div>
       <h1 className="text-xl font-semibold mb-4 text-gray-800">Espaces de travail</h1>
-      {workspaces.map((workspace) => {        
-        let isSelected = false;
-
-        if (selectedWorkspace) {
-          isSelected = selectedWorkspace._id === workspace._id;
-        }
+      {workspaces.map((workspace) => {
+        const isSelected = selectedWorkspace?._id === workspace._id;
 
         return (
           <div
             key={workspace._id}
             className={`flex items-center justify-between p-3 rounded-md hover:bg-gray-50 cursor-pointer transition-all duration-200 
-              ${isSelected ? 'bg-blue-50' : ''}`}
+                ${isSelected ? 'bg-blue-50' : ''}`}
+            onClick={() => handleWorkspaceClick(workspace)}
           >
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-blue-500 text-white flex items-center justify-center rounded-full text-lg font-bold">

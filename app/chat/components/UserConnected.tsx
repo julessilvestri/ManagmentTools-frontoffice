@@ -95,7 +95,7 @@ const UserConnected: React.FC<UserConnectedProps> = ({ userId, token }) => {
                 </button>
 
                 {showLogoutConfirm && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
                             <img
                                 src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3ZvdjJnbmZsdjFxemxmNmdvNnRxdms3OW91ZHF5NWNhNTg4YmlweiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wMlcT3exSxYAcbkby6/giphy.gif"
@@ -121,6 +121,7 @@ const UserConnected: React.FC<UserConnectedProps> = ({ userId, token }) => {
                         </div>
                     </div>
                 )}
+
             </div>
         </div>
     );

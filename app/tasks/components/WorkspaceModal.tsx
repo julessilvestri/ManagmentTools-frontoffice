@@ -15,14 +15,13 @@ const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ userId, token
     const [availableUsers, setAvailableUsers] = useState<any[]>([]); // Liste des utilisateurs disponibles
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null); // Pour afficher les erreurs
-    const [searchQuery, setSearchQuery] = useState<string>(""); // Requête de recherche
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     // Récupérer les utilisateurs disponibles
     useEffect(() => {
         const fetchAvailableUsers = async () => {
             try {
-                const users = await fetchUsers(userId, token); // Supposons que vous avez une fonction pour obtenir les utilisateurs
-                console.log(users);
+                const users = await fetchUsers(userId, token);
                 setAvailableUsers(users);
             } catch (error) {
                 setError("Erreur lors de la récupération des utilisateurs");
