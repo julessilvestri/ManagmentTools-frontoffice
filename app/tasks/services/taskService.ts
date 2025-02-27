@@ -80,3 +80,18 @@ export const updateTask = async (token: string, taskId: string, updatedTask: {
 
     return await response.json();
 };
+
+export const deleteTask = async (token: string, taskId: string) => {
+    const response = await fetch(`http://${process.env.NEXT_PUBLIC_API_URL_SERVER_IP}:${process.env.NEXT_PUBLIC_API_URL_SERVER_PORT}/api/v1/tasks/${taskId}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+    }
+
+    return await response.json();
+};

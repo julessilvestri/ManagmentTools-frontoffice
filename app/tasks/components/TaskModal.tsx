@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createTask, updateTask } from "../services/taskService";
+import { createTask, updateTask, deleteTask } from "../services/taskService";
 
 export interface Task {
     _id: string; // Unique identifier for the task
@@ -104,6 +104,24 @@ const TaskModal: React.FC<TaskModalProps> = ({
         setAssignedTo("");
         setStatus(initialStatus);
         setPriority("Low");
+    };
+
+    const deleteTaskHandler = async () => {
+        if (!selectedTask) return;
+
+        try {
+            setLoading(true);
+            setError("");
+
+            await deleteTask(token, selectedTask._id);
+
+            setModalOpen(false);
+        } catch (error) {
+            console.error("Erreur lors de la suppression de la tâche:", error);
+            setError("Une erreur est survenue lors de la suppression.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return modalOpen ? (
@@ -226,6 +244,15 @@ const TaskModal: React.FC<TaskModalProps> = ({
                         >
                             Fermer
                         </button>
+                        {selectedTask && (
+                            <button
+                                onClick={deleteTaskHandler}
+                                className={`px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all ${loading ? "bg-gray-400" : ""}`}
+                                disabled={loading}
+                            >
+                                {loading ? "Suppression..." : "Supprimer"}
+                            </button>
+                        )}
                     </div>
                 </div>
 
