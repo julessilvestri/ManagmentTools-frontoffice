@@ -139,9 +139,12 @@ const TasksPage = () => {
       {selectedWorkspace ? (
         <KanbanBoard workspace={selectedWorkspace} token={token!} />
       ) : (
-        <p className="text-gray-500">Veuillez sélectionner un espace de travail pour afficher le KanbanBoard.</p>
+        <div className="flex items-center justify-center h-screen w-[67%]">
+          <p className="text-gray-500 text-xl text-center">
+            Veuillez sélectionner un espace de travail.
+          </p>
+        </div>
       )}
-
 
       {/* Modal de création de workspace */}
       {isModalOpen && (
