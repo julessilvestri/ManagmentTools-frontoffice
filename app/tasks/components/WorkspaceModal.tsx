@@ -53,9 +53,9 @@ const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ userId, token
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (name && description && members.length > 0) {
+        if (name && description) {
             onCreateWorkspace({ name, description, members });
-            onClose();  // Fermer le modal après création
+            onClose();
         }
     };
 
@@ -63,7 +63,7 @@ const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ userId, token
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">Créer un nouvel espace de travail</h2>
-                {error && <div className="text-red-500 text-sm mb-4">{error}</div>} {/* Affichage de l'erreur */}
+                {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-600" htmlFor="workspace-name">Nom de l'espace de travail</label>

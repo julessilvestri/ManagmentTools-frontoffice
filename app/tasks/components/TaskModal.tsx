@@ -20,6 +20,7 @@ interface TaskModalProps {
     token: string;
     workspaceId: string;
     onSave: (taskData: Task) => Promise<void>;
+    onDelete: () => Promise<void>;
     initialStatus: "Backlog" | "ToDo" | "InProgress" | "Done";
 }
 
@@ -30,6 +31,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
     token,
     workspaceId,
     onSave,
+    onDelete,
     initialStatus
 }) => {
     const [title, setTitle] = useState("");
@@ -80,13 +82,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
             setLoading(true);
             setError("");
 
-            if (selectedTask) {
-                await updateTask(token, selectedTask._id, taskData);
-            } else {
-                await createTask(token, taskData);
-            }
-
             await onSave(taskData);
+
             setModalOpen(false);
         } catch (error) {
             console.error("Erreur lors de l'enregistrement de la tâche:", error);
@@ -104,24 +101,6 @@ const TaskModal: React.FC<TaskModalProps> = ({
         setAssignedTo("");
         setStatus(initialStatus);
         setPriority("Low");
-    };
-
-    const deleteTaskHandler = async () => {
-        if (!selectedTask) return;
-
-        try {
-            setLoading(true);
-            setError("");
-
-            await deleteTask(token, selectedTask._id);
-
-            setModalOpen(false);
-        } catch (error) {
-            console.error("Erreur lors de la suppression de la tâche:", error);
-            setError("Une erreur est survenue lors de la suppression.");
-        } finally {
-            setLoading(false);
-        }
     };
 
     return modalOpen ? (
@@ -246,7 +225,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                         </button>
                         {selectedTask && (
                             <button
-                                onClick={deleteTaskHandler}
+                                onClick={onDelete}
                                 className={`px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all ${loading ? "bg-gray-400" : ""}`}
                                 disabled={loading}
                             >

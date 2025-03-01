@@ -37,7 +37,7 @@ export default function RegisterPage() {
       if (!response.ok) throw new Error("Erreur d'inscription");
 
       setMessage("Inscription réussie !");
-      router.push("/login"); // Rediriger après inscription
+      router.push("/login");
     } catch (error) {
       setMessage("Erreur lors de l'inscription");
     }

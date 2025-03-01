@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { PlusCircle } from "lucide-react";
 import TaskModal from "./TaskModal";
-import { fetchTasks, updateTask, createTask } from "../services/taskService";
+import { fetchTasks, updateTask, createTask, deleteTask } from "../services/taskService";
 
 interface Task {
   _id: string;
@@ -141,6 +141,31 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ workspace, token }) => {
     [kanbanColumns, token, selectedTask, workspace._id]
   );
 
+  const handleDeleteTask = useCallback(
+    async () => {
+      try {
+        if (selectedTask)
+          await deleteTask(token, selectedTask._id);
+
+        setModalOpen(false);
+
+        const tasks: Task[] = await fetchTasks(token, workspace._id);
+
+        const newColumns = {
+          Backlog: tasks.filter((task) => task.status === "Backlog"),
+          ToDo: tasks.filter((task) => task.status === "ToDo"),
+          InProgress: tasks.filter((task) => task.status === "InProgress"),
+          Done: tasks.filter((task) => task.status === "Done"),
+        };
+
+        setKanbanColumns(newColumns);
+      } catch (error) {
+        console.error("Erreur lors de la suppression de la tâche:", error);
+      }
+    },
+    [kanbanColumns, token, selectedTask, workspace._id]
+  );
+
   return (
     <div className="flex-1 bg-gray-100 p-4 lg:p-6 flex flex-col w-full lg:w-[80%] xl:w-[75%]">
       <div className="bg-gradient-to-r from-blue-500 to-blue-300 p-4 rounded-lg shadow-sm mb-6">
@@ -241,7 +266,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ workspace, token }) => {
 
                     {task.assignedTo ? (
                       <img
-                        src={`https://lindamood.net/wp-content/uploads/2019/09/Blank-profile-image.jpg`} // Avatar temporaire
+                        src={`https://lindamood.net/wp-content/uploads/2019/09/Blank-profile-image.jpg`}
                         alt="Assignee"
                         className="w-8 h-8 rounded-full border border-gray-300"
                       />
@@ -263,6 +288,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ workspace, token }) => {
         token={token}
         workspaceId={workspace._id}
         onSave={handleSaveTask}
+        onDelete={handleDeleteTask}
         initialStatus={initialStatus}
       />
     </div>
